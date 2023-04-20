@@ -177,19 +177,19 @@ def followUser(userid):
     if (userid in event['following'] ):
         print("done")
     else:
-    #     event['following'].insert(0, userid)
-    #     client.put(event)
-    # # --------------
-    # queryb = client.query(kind='users')
-    # queryb.add_filter('userid', '=', userid)
-    # resultsty = list(queryb.fetch())
-    # eventx = resultsty[0]
-    # print(eventx)
-    # if(session['userid'] in event['followers']):
-    #     print("done")
-    # else:
-    #     eventx['followers'].insert(0, session['userid'])
-    #     client.put(eventx)
+        event['following'].insert(0, userid)
+        client.put(event)
+    # --------------
+    queryb = client.query(kind='users')
+    queryb.add_filter('userid', '=', userid)
+    resultsty = list(queryb.fetch())
+    eventx = resultsty[0]
+    print(eventx)
+    if(session['userid'] in event['followers']):
+        print("done")
+    else:
+        eventx['followers'].insert(0, session['userid'])
+        client.put(eventx)
     query29 = client.query(kind = 'users')
     query29.add_filter('userid', '=', userid)
     resultxe = list(query29.fetch())
