@@ -149,12 +149,12 @@ def viewFollowers(userid):
     return render_template('followers.html',followers = followers, userid = userid)
 
 @app.route('/viewFollowing/<userid>')
-def viewFollowing(userid):
-    query = client.query(kind='users')
-    query.add_filter('userid', '=', userid)
-    result = list(query.fetch())
-    following = result[0]['following']
-    return render_template('following.html',following = following, userid = userid)
+# def viewFollowing(userid):
+#     query = client.query(kind='users')
+#     query.add_filter('userid', '=', userid)
+#     result = list(query.fetch())
+#     following = result[0]['following']
+#     return render_template('following.html',following = following, userid = userid)
 
 @app.route('/followUser/<userid>')
 def followUser(userid):
