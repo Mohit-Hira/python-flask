@@ -149,25 +149,25 @@ def viewFollowers(userid):
     return render_template('followers.html',followers = followers, userid = userid)
 
 @app.route('/viewFollowing/<userid>')
-# def viewFollowing(userid):
-#     query = client.query(kind='users')
-#     query.add_filter('userid', '=', userid)
-#     result = list(query.fetch())
-#     following = result[0]['following']
-#     return render_template('following.html',following = following, userid = userid)
+def viewFollowing(userid):
+    query = client.query(kind='users')
+    query.add_filter('userid', '=', userid)
+    result = list(query.fetch())
+    following = result[0]['following']
+    return render_template('following.html',following = following, userid = userid)
 
 @app.route('/followUser/<userid>')
 def followUser(userid):
     query2 = client.query(kind = 'users')
     query2.add_filter('userid', '=', userid)
-    resultx = list(query2.fetch())
-    username = resultx[0]['username']
-    followersCount = len(resultx[0]['followers'])
-    followingCount = len(resultx[0]['following'])
-    querys = client.query(kind='posts')
-    querys.add_filter('userid', '=', userid)
-    querys.order = ['-created_at']
-    data = list(querys.fetch())
+    # resultx = list(query2.fetch())
+    # username = resultx[0]['username']
+    # followersCount = len(resultx[0]['followers'])
+    # followingCount = len(resultx[0]['following'])
+    # querys = client.query(kind='posts')
+    # querys.add_filter('userid', '=', userid)
+    # querys.order = ['-created_at']
+    # data = list(querys.fetch())
 
     query = client.query(kind='users')
     query.add_filter('userid', '=', session['userid'])
