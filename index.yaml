@@ -1,0 +1,16 @@
+indexes:
+- kind: visit
+  ancestor: yes
+  properties:
+  - name: timestamp
+    direction: desc
+- kind: posts
+  properties:
+  - name: userid
+  - name: created_at
+    direction: desc
+- kind: posts
+  properties:
+  - name: following
+  - name: created_at
+    direction: desc

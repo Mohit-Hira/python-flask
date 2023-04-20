@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+logged-in + {{userid}} + {{username}}
+{% block style %}
+<style>
+    [data-placeholder]::after {
+        content: " ";
+        box-shadow: 0 0 50px 9px rgba(254,254,254);
+        position: absolute;
+        top: 0;
+        left: -100%;
+        height: 100%; 
+        animation: load 1s infinite;
+    }
+    @keyframes load {
+        0%{ left: -100%}
+        100%{ left: 150%}
+    }
+ </style>
+{% endblock style %}
+
+{% block body %}
+<div class="w-full flex items-center flex-col bg-white" id="skeleton">
+    <div class="flex flex-col bg-white shadow-md  rounded-md items-center">
+
+       <div class="flex items-center p-4">
+           <div data-placeholder class="mr-2 h-10 w-10  rounded-full overflow-hidden relative bg-gray-200">
+       
+               </div>
+           <div class="flex flex-col justify-between items-center">
+           <div data-placeholder class="mb-2 h-5 w-40 overflow-hidden relative bg-gray-200">
+           
+           </div>
+           </div>
+
+       </div>
+       <div data-placeholder class="h-52 w-full overflow-hidden relative bg-gray-200"></div>
+       
+       <div class="flex flex-col p-4">
+           <div class="flex">
+           <div data-placeholder  class=" flex h-5 w-5 overflow-hidden relative bg-gray-200 mr-1"></div>
+           <div data-placeholder  class="flex h-5 w-48 overflow-hidden relative bg-gray-200"></div>
+           </div>
+           <div class="flex mt-1">
+           <div data-placeholder  class="flex h-5 w-5 overflow-hidden relative bg-gray-200 mr-1"></div>
+           <div data-placeholder  class="flex h-5 w-48 overflow-hidden relative bg-gray-200"></div>
+           </div>
+       </div>
+       <div class="w-full h-px  overflow-hidden relative bg-gray-200 m-4"></div>
+       <div class="flex justify-between items-center p-4 w-full">
+           <div data-placeholder class="mr-2 h-10 w-16  overflow-hidden relative bg-gray-200">
+       
+               </div>
+         
+           <div data-placeholder class="mb-2 h-5 w-20 overflow-hidden relative bg-gray-200">
+           
+           </div>
+
+       </div>
+   </div>
+</div>
+
+<div class="posts flex flex-col justify-center items-center hidden" id="posts">
+ <!-- component -->
+{% for items in data %}
+<div class="bg-gray-100 p-4">
+    <div class="bg-white border rounded-sm max-w-md">
+      <div class="flex items-center px-4 py-3">
+        <div class="ml-3 ">
+          <span class="text-sm font-semibold antialiased block leading-tight">CAPTION -  {{items.caption}}</span>
+          <hr class="w-full bg-red-800 h-1 my-3">
+          <span class="text-gray-600 text-xs block">by- {{items.userid}}<a class="text-blue-600 ml-3" href="{{url_for('viewProfileUser', userid = items.userid)}}">View profile</a></span>
+        </div>
+      </div>
+        <img src="{{items.image_url}}"/>
+        <form method="POST" action="{{url_for('addComment',post_id = items.id)}}">
+        <div class="flex justify-around">
+          <input
+          class="block w-[50%] pl-10 pr-3 py-2 border border-gray-400 rounded-md leading-5 bg-gray-100 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-blue-300 focus:shadow-outline-blue sm:text-sm transition duration-150 ease-in-out"
+          type="text" name="comment"
+          maxlength="200"
+          placeholder="Type comment">
+          <button type="submit" class="bg-black rounded-lg text-gray-100 px-3">Add comment</button>
+        </div>
+      </form>
+      <div class="flex items-center justify-between mx-4 mt-3 mb-2">
+        <div class="flex gap-5">
+          <svg fill="#262626" height="24" viewBox="0 0 48 48" width="24"><path clip-rule="evenodd" d="M47.5 46.1l-2.8-11c1.8-3.3 2.8-7.1 2.8-11.1C47.5 11 37 .5 24 .5S.5 11 .5 24 11 47.5 24 47.5c4 0 7.8-1 11.1-2.8l11 2.8c.8.2 1.6-.6 1.4-1.4zm-3-22.1c0 4-1 7-2.6 10-.2.4-.3.9-.2 1.4l2.1 8.4-8.3-2.1c-.5-.1-1-.1-1.4.2-1.8 1-5.2 2.6-10 2.6-11.4 0-20.6-9.2-20.6-20.5S12.7 3.5 24 3.5 44.5 12.7 44.5 24z" fill-rule="evenodd"></path></svg>
+        </div>
+       
+      </div>
+      <div class="font-semibold text-sm mx-4 mt-2 mb-4">comments</div>
+      <ul class="font-semibold text-sm mx-4 mt-2 mb-4 list-disc">
+      {% for item in items['comments'] %}
+       {% if loop.index < 6 %}
+       <li>
+        {{item.comment_by}}->{{item.comment}}
+      </li>
+       {% endif %}
+      {% endfor %}
+      </ul>
+      <button onclick="(function(){
+        let elem = document.getElementById('comment_toggle_{{items.id}}');
+        elem.classList.toggle('hidden');
+    })()">All Comments</button>
+    
+
+      <ul class="hidden font-semibold text-sm mx-4 mt-2 mb-4 list-disc" id="comment_toggle_{{items.id}}">
+        {% for item in items['comments'] %}
+      {% if loop.index >= 6 %}
+      <li >
+       {{item.comment_by}}->{{item.comment}}
+     </li>
+      {% endif %}
+     {% endfor %}
+      </ul>
+    </div>
+  </div>
+{% endfor %}
+</div>
+{% endblock body %}
+
+
+{% block script %}
+    let posts_box = document.getElementById('posts')
+    let skeleton = document.getElementById('skeleton')
+           setTimeout(()=>{
+            posts_box.classList.remove('hidden')
+            skeleton.classList.add('hidden')
+           },1500)
+{% endblock script %}

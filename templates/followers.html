@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}
+    Followers - {{userid}}
+{% endblock title %}
+{% block body %}
+<div>
+    <h1 class="text-center font-extrabold text-3xl">Followers - {{userid}}</h1>
+    <div class="w-screen flex items-center justify-center mt-6">
+        <ul> 
+            {% for items in followers %}
+               <a href="{{url_for('viewProfileUser',userid = items)}}"> <button class=" bg-gray-800 text-gray-100 rounded-full px-4">
+                {{items}}
+               </button>
+            </a>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock body %}

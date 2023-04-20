@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    search - {{query}}
+{% endblock title %}
+{% block body %}
+<div class="flex justify-center flex-col items-center">
+    <h1 class="font-extrabold text-4xl text-center">Results for - {{query}}</h1>
+    <ul class="font-semibold text-sm mx-4 mt-2 mb-4 list-disc">
+
+
+        {% for items in result %}
+          
+            <li class="my-3 underline">
+                UserName - {{items.username}}
+                userId - {{items.userid}}
+                <a href="{{url_for('viewProfileUser', userid=items.userid)}}"><button class="ml-3 bg-black text-white px-3 rounded-full">ViewProfile</button></a>
+              </li>
+          
+        {% endfor %}
+    </ul>
+</div>
+{% endblock body %}
