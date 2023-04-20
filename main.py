@@ -140,6 +140,13 @@ def viewProfile():
         return render_template('user_profile.html', userid = session['userid'], username = session['username'], data = data, followersCount = followersCount, followingCount = followingCount,postCount=postCount)
 
 
+@app.route('/viewFollowers/<userid>')
+def viewFollowers(userid):
+    query = client.query(kind='users')
+    query.add_filter('userid', '=', userid)
+    result = list(query.fetch())
+    followers = result[0]['followers']
+    return render_template('followers.html',followers = followers, userid = userid)
 
 @app.route('/viewFollowing/<userid>')
 def viewFollowing(userid):
