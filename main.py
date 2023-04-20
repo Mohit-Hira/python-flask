@@ -160,14 +160,14 @@ def viewFollowing(userid):
 def followUser(userid):
     query2 = client.query(kind = 'users')
     query2.add_filter('userid', '=', userid)
-    # resultx = list(query2.fetch())
-    # username = resultx[0]['username']
-    # followersCount = len(resultx[0]['followers'])
-    # followingCount = len(resultx[0]['following'])
-    # querys = client.query(kind='posts')
-    # querys.add_filter('userid', '=', userid)
-    # querys.order = ['-created_at']
-    # data = list(querys.fetch())
+    resultx = list(query2.fetch())
+    username = resultx[0]['username']
+    followersCount = len(resultx[0]['followers'])
+    followingCount = len(resultx[0]['following'])
+    querys = client.query(kind='posts')
+    querys.add_filter('userid', '=', userid)
+    querys.order = ['-created_at']
+    data = list(querys.fetch())
 
     query = client.query(kind='users')
     query.add_filter('userid', '=', session['userid'])
@@ -177,19 +177,19 @@ def followUser(userid):
     if (userid in event['following'] ):
         print("done")
     else:
-        event['following'].insert(0, userid)
-        client.put(event)
-    # --------------
-    queryb = client.query(kind='users')
-    queryb.add_filter('userid', '=', userid)
-    resultsty = list(queryb.fetch())
-    eventx = resultsty[0]
-    print(eventx)
-    if(session['userid'] in event['followers']):
-        print("done")
-    else:
-        eventx['followers'].insert(0, session['userid'])
-        client.put(eventx)
+    #     event['following'].insert(0, userid)
+    #     client.put(event)
+    # # --------------
+    # queryb = client.query(kind='users')
+    # queryb.add_filter('userid', '=', userid)
+    # resultsty = list(queryb.fetch())
+    # eventx = resultsty[0]
+    # print(eventx)
+    # if(session['userid'] in event['followers']):
+    #     print("done")
+    # else:
+    #     eventx['followers'].insert(0, session['userid'])
+    #     client.put(eventx)
     query29 = client.query(kind = 'users')
     query29.add_filter('userid', '=', userid)
     resultxe = list(query29.fetch())
